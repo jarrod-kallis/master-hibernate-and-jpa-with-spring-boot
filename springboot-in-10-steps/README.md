@@ -11,41 +11,43 @@ https://github.com/in28minutes/in28minutes-initiatives/blob/master/The-in28Minut
 
 ### Auto Configuration
 
-Spring Boot looks at a) Frameworks available on the CLASSPATH b) Existing configuration for the application. Based on these, Spring Boot provides basic configuration needed to configure the application with these frameworks. This is called Auto Configuration.
+> Spring Boot looks at a) Frameworks available on the CLASSPATH b) Existing configuration for the application. Based on these, Spring Boot provides basic configuration needed to configure the application with these frameworks. This is called Auto Configuration.
 
 https://www.springboottutorial.com/spring-boot-auto-configuration
 
 ### Actuator
-
-> <dependency>
->	<groupId>org.springframework.boot</groupId>
->	<artifactId>spring-boot-starter-actuator</artifactId>
-> </dependency>
-
-Actuator provides monitoring.
--- How many times a specific service was called/failed
+```
+<dependency>
+  <groupId>org.springframework.boot</groupId>
+  <artifactId>spring-boot-starter-actuator</artifactId>
+</dependency>
+```
+Actuator provides monitoring.<br>
+eg. How many times a specific service was called/failed
 
 Actuator URL
 http://localhost:8080/actuator
 
-Actuator exposes a lot of REST services.
-These services are compliant with the HAL standard.
-We can use a HAL browser to browser through the data provided by the actuator.
+Actuator exposes a lot of REST services.<br>
+These services are compliant with the HAL standard.<br>
+We can use a HAL browser to browser through the data provided by the actuator.<br>
 
 > **HAL Browser is deprecated**
-> <dependency>
->	<groupId>org.springframework.data</groupId>
->	<artifactId>spring-data-rest-hal-browser</artifactId>
-> </dependency>
-
+```
+<dependency>
+	<groupId>org.springframework.data</groupId>
+	<artifactId>spring-data-rest-hal-browser</artifactId>
+</dependency>
+```
 > **Use HAL Explorer instead**
-> <dependency>
->	<groupId>org.springframework.data</groupId>
->	<artifactId>spring-data-rest-hal-explorer</artifactId>
-> </dependency>
+```
+<dependency>
+	<groupId>org.springframework.data</groupId>
+	<artifactId>spring-data-rest-hal-explorer</artifactId>
+</dependency>
+```
 
-HAL Browser/Explorer URL
-http://localhost:8080
+HAL Browser/Explorer URL: http://localhost:8080
 
 ![HAL Explorer](README_images/02-HAL-Explorer.png)
 
@@ -64,8 +66,9 @@ To get auto complete: Install **Spring Tools Eclipse Plugin**
 ### Spring Boot Developer Tools
 
 Picks up code changes without restarting the server
-
-> <dependency>
->	<groupId>org.springframework.boot</groupId>
->	<artifactId>spring-boot-devtools</artifactId>
-> </dependency>
+```
+<dependency>
+	<groupId>org.springframework.boot</groupId>
+	<artifactId>spring-boot-devtools</artifactId>
+</dependency>
+```
