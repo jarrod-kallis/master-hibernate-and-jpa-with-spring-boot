@@ -35,15 +35,15 @@ We can use a HAL browser to browser through the data provided by the actuator.<b
 > **HAL Browser is deprecated**
 ```
 <dependency>
-	<groupId>org.springframework.data</groupId>
-	<artifactId>spring-data-rest-hal-browser</artifactId>
+  <groupId>org.springframework.data</groupId>
+  <artifactId>spring-data-rest-hal-browser</artifactId>
 </dependency>
 ```
 > **Use HAL Explorer instead**
 ```
 <dependency>
-	<groupId>org.springframework.data</groupId>
-	<artifactId>spring-data-rest-hal-explorer</artifactId>
+  <groupId>org.springframework.data</groupId>
+  <artifactId>spring-data-rest-hal-explorer</artifactId>
 </dependency>
 ```
 
@@ -68,7 +68,7 @@ To get auto complete: Install **Spring Tools Eclipse Plugin**
 Picks up code changes without restarting the server
 ```
 <dependency>
-	<groupId>org.springframework.boot</groupId>
-	<artifactId>spring-boot-devtools</artifactId>
+  <groupId>org.springframework.boot</groupId>
+  <artifactId>spring-boot-devtools</artifactId>
 </dependency>
 ```
