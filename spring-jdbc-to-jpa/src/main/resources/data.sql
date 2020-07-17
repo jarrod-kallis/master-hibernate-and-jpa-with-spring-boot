@@ -15,3 +15,6 @@ values (10002, 'Tessa', 'Work', sysdate());
 
 insert into person (id, name, location, dob)
 values (10003, 'Ben', 'School', sysdate());
+
+insert into person (id, name, location, dob)
+values (10004, 'Jarrod Kallis', 'Ireland', sysdate());
