@@ -39,8 +39,8 @@ Add to `application.properties`
 spring.data.jpa.repositories.bootstrap-mode=default
 ```
 
-4. Navigate to H2-Console
-http://localhost:8080/h2-console
+4. Navigate to H2-Console <br>
+http://localhost:8080/h2-console <br>
 ![H2 Console](README_images/02-H2-Console.png)
 
 ### POM.xml
@@ -56,7 +56,7 @@ This entry causes Spring Boot to auto configure a datasource that connects to an
 
 ### Creating Tables & Populating Data
 
-Create a `data.sql` file in `src/main/resources` with the SQL.
+Create a `data.sql` file in `src/main/resources` with the SQL. <br>
 It has to be called `data.sql`.
 
 ### H2 Console Troubleshooting
