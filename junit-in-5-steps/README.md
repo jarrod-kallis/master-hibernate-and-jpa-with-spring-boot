@@ -19,3 +19,13 @@ All code can be found here: https://github.com/in28minutes/jpa-with-hibernate/tr
 
 ### Run JUnit Tests
 ![Run JUnit Tests](README_images/05-Run-JUnit-Tests.png)
+
+## Differences between JUnit 4 & JUnit 5
+
+### JUnit 5 Guide:
+https://github.com/in28minutes/in28minutes-initiatives/blob/master/The-in28Minutes-TroubleshootingGuide-And-FAQ/junit5.md
+
+### JUnit 5 Upgrade Commit
+https://github.com/in28minutes/jpa-with-hibernate/commit/0ae2007c8e08420e6d5ab2a86499274c7c60c8ae
+
+![Differences](README_images/06-Differences-Between-JUnit-4-And-5.png)
