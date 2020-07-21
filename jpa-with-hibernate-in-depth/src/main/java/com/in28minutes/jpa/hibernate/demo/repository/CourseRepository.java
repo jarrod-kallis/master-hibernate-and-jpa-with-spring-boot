@@ -1,5 +1,8 @@
 package com.in28minutes.jpa.hibernate.demo.repository;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.persistence.EntityManager;
 
 import org.slf4j.Logger;
@@ -9,6 +12,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.in28minutes.jpa.hibernate.demo.entity.Course;
+import com.in28minutes.jpa.hibernate.demo.entity.Review;
 
 @Repository
 @Transactional
@@ -39,6 +43,25 @@ public class CourseRepository {
 
     public void deleteById(Long id) {
 	em.remove(findById(id));
+    }
+
+    public void addReviews(Long courseId, List<Review> reviews) {
+	Course c = findById(courseId);
+
+	for (Review review : reviews) {
+	    // We need to add the review manually to the course so that we have the link
+	    // setup immediately, otherwise we will need to em.flush() at the end of this
+	    // method in order to pick up the reviews for the course through
+	    // course.getReviews()
+	    c.addReview(review);
+
+	    review.setCourse(c);
+
+	    em.persist(review);
+	}
+
+	// Not needed if we manually add the reviews to the course
+	// em.flush();
     }
 
     public void playWithUpdateTwiceInOneTransaction() {
@@ -137,6 +160,13 @@ public class CourseRepository {
 	playWithRefresh();
 
 	playWithCreatedAndUpdatedDateTime();
+
+	List<Review> reviews = new ArrayList<Review>();
+	reviews.add(new Review("1", "That was toilet"));
+	reviews.add(new Review("2.5", "I've seen better"));
+
+	addReviews(10003L, reviews);
+	logger.info("\n\n\nCourseRepo: Course 10003 Reviews: {}\n\n\n", findById(10003L).getReviews());
 
 	// EM will now flush all changes to the DB, because the transaction has ended
 	// Transaction End
