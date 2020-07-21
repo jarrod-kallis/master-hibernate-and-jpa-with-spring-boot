@@ -23,6 +23,10 @@ public class StudentRepository {
     @Autowired
     private EntityManager em;
 
+    public List<Long> getCount() {
+	return em.createQuery("select count(s.id) from Student s", Long.class).getResultList();
+    }
+
     public Student findById(Long id) {
 	return em.find(Student.class, id);
     }
