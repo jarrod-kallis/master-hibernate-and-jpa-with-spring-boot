@@ -35,10 +35,10 @@ public class DemoApplication implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-	courseRepo.playground();
-	studentRepo.playground();
-	reviewRepo.playground();
-	employeeRepo.playground();
+//	courseRepo.playground();
+//	studentRepo.playground();
+//	reviewRepo.playground();
+//	employeeRepo.playground();
 
 	// getReviews will throw an exception because they are LAZY loaded and this
 	// method is outside a @Transactional

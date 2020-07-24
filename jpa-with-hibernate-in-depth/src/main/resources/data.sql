@@ -9,7 +9,7 @@ insert into passport(id, number) values(40003L, 'C5678900');
 
 insert into student(id, fullname, passport_id) values(20001L, 'Jarrod Kallis', 40001);
 insert into student(id, fullname, passport_id) values(20002L, 'Tessa Kallis', 40002);
-insert into student(id, fullname) values(20003L, 'Ben Kallis');
+insert into student(id, fullname, passport_id) values(20003L, 'Ben Kallis', 40003);
 
 insert into review(id, rating, description, course_id, student_id) values(50001, '5', 'Great Course', 10001L, 20001L);
 insert into review(id, rating, description, course_id, student_id) values(50002, '1', 'You suck!', 10001L, 20001L);
