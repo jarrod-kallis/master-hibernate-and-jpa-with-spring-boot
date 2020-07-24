@@ -13,6 +13,7 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
 import com.in28minutes.jpa.hibernate.demo.repository.StudentRepository;
@@ -37,6 +38,9 @@ public class Student {
 	    joinColumns = { @JoinColumn(name = "STUDENT_ID") }, // Name of the foreign key column for this entity
 	    inverseJoinColumns = { @JoinColumn(name = "COURSE_ID") }) // Name of the foreign key column for other entity
     private List<Course> courses = new ArrayList<Course>();
+
+    @OneToMany(mappedBy = "student")
+    private List<Review> reviews = new ArrayList<Review>();
 
     protected Student() {
 	super();
@@ -81,6 +85,22 @@ public class Student {
 
     public void removeCourse(Course course) {
 	this.courses.remove(course);
+    }
+
+    public List<Review> getReviews() {
+	return reviews;
+    }
+
+//    public void setReviews(List<Review> reviews) {
+//        this.reviews = reviews;
+//    }
+
+    public void addReview(Review review) {
+	this.reviews.add(review);
+    }
+
+    public void removeReview(Review review) {
+	this.reviews.remove(review);
     }
 
     @Override

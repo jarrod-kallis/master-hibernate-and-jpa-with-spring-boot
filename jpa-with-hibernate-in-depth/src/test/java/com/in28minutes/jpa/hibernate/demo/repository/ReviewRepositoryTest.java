@@ -11,6 +11,7 @@ import org.springframework.test.annotation.DirtiesContext;
 
 import com.in28minutes.jpa.hibernate.demo.entity.Course;
 import com.in28minutes.jpa.hibernate.demo.entity.Review;
+import com.in28minutes.jpa.hibernate.demo.entity.Student;
 
 @SpringBootTest
 public class ReviewRepositoryTest {
@@ -21,6 +22,9 @@ public class ReviewRepositoryTest {
     @Autowired
     CourseRepository courseRepo;
 
+    @Autowired
+    StudentRepository studentRepo;
+
     @Test
     @DirtiesContext
     @Transactional
@@ -28,7 +32,11 @@ public class ReviewRepositoryTest {
 	Course c = new Course("Rust");
 	courseRepo.save(c);
 
+	Student s = new Student("Temp Student");
+	studentRepo.save(s);
+
 	Review r = new Review("3", "Average");
+	r.setStudent(s);
 	r.setCourse(c);
 	reviewRepo.save(r);
 

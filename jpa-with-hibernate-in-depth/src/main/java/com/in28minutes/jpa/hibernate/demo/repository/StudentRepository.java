@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.in28minutes.jpa.hibernate.demo.entity.Course;
 import com.in28minutes.jpa.hibernate.demo.entity.Passport;
 import com.in28minutes.jpa.hibernate.demo.entity.Student;
 
@@ -25,6 +26,10 @@ public class StudentRepository {
 
     public List<Long> getCount() {
 	return em.createQuery("select count(s.id) from Student s", Long.class).getResultList();
+    }
+
+    public List<Student> findAll() {
+	return em.createQuery("select s from Student s", Student.class).getResultList();
     }
 
     public Student findById(Long id) {
@@ -69,10 +74,32 @@ public class StudentRepository {
 	}
     }
 
+    public void playWithGettingAStudentAndTheirCourses(Long studentId) {
+	Student s = findById(studentId);
+//	Student s = em.find(Student.class, studentId);
+
+	List<Course> courses = s.getCourses();
+
+	logger.info("\n\n\nStudent {} Courses: {}\n\n\n", studentId, courses);
+    }
+
+    public void insertStudentAndCourseAndLinkThem(Student s, Course c) {
+	s.addCourse(c);
+	c.addStudent(s);
+
+	em.persist(s);
+	em.persist(c);
+
+	logger.info("\n\n\nStudent {} Enrolled For Courses: {}\n\n\n", s, s.getCourses());
+	logger.info("\n\n\nCourse {} Has The Following Student: {}\n\n\n", c, c.getStudents());
+    }
+
     public void playground() {
 	// Transaction Start
 	playWithCreatingAStudentWithAPassport();
 	playWithGettingStudentsWithAssociatedPassports();
+	playWithGettingAStudentAndTheirCourses(20002L);
+	insertStudentAndCourseAndLinkThem(new Student("Michael Kallis"), new Course("Real Estate"));
 
 	// EM will now flush all changes to the DB, because the transaction has ended
 	// Transaction End

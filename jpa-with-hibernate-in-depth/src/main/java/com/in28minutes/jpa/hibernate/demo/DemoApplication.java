@@ -8,6 +8,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import com.in28minutes.jpa.hibernate.demo.repository.CourseRepository;
+import com.in28minutes.jpa.hibernate.demo.repository.EmployeeRepository;
 import com.in28minutes.jpa.hibernate.demo.repository.ReviewRepository;
 import com.in28minutes.jpa.hibernate.demo.repository.StudentRepository;
 
@@ -25,6 +26,9 @@ public class DemoApplication implements CommandLineRunner {
     @Autowired
     private ReviewRepository reviewRepo;
 
+    @Autowired
+    private EmployeeRepository employeeRepo;
+
     public static void main(String[] args) {
 	SpringApplication.run(DemoApplication.class, args);
     }
@@ -34,6 +38,7 @@ public class DemoApplication implements CommandLineRunner {
 	courseRepo.playground();
 	studentRepo.playground();
 	reviewRepo.playground();
+	employeeRepo.playground();
 
 	// getReviews will throw an exception because they are LAZY loaded and this
 	// method is outside a @Transactional
