@@ -1,6 +1,9 @@
 package com.in28minutes.jpa.hibernate.demo.repository;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
+import java.util.List;
 
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
@@ -10,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.in28minutes.jpa.hibernate.demo.entity.Course;
 import com.in28minutes.jpa.hibernate.demo.entity.Passport;
 import com.in28minutes.jpa.hibernate.demo.entity.Student;
 
@@ -53,6 +57,26 @@ class StudentRepositoryTest {
 	Passport p = s.getPassport();
 
 	assertEquals("A1234567", p.getNumber());
+    }
+
+    @Test
+    @Transactional
+    void playWithGettingAStudentAndTheirCourses() {
+	Student s = studentRepo.findById(20002L);
+
+	List<Course> courses = s.getCourses();
+
+	logger.info("\n\n\nStudent {} Courses: {}\n\n\n", s.getId(), courses);
+
+	assertEquals(courses.size(), 3);
+//	assertEquals("History", courses.get(0).getName());
+//	assertEquals("ReactJS", courses.get(1).getName());
+//	assertEquals("English", courses.get(2).getName());
+
+	for (Course course : courses) {
+	    assertTrue(course.getName().equals("History") || course.getName().equals("ReactJS")
+		    || course.getName().equals("English"));
+	}
     }
 
 //    @Test

@@ -13,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.in28minutes.jpa.hibernate.demo.entity.Course;
 import com.in28minutes.jpa.hibernate.demo.entity.Review;
+import com.in28minutes.jpa.hibernate.demo.entity.Student;
 
 @Repository
 @Transactional
@@ -24,6 +25,9 @@ public class CourseRepository {
 
     @Autowired
     private EntityManager em;
+
+    @Autowired
+    private StudentRepository studentRepo;
 
     public Course findById(Long id) {
 	return em.find(Course.class, id);
@@ -45,7 +49,7 @@ public class CourseRepository {
 	em.remove(findById(id));
     }
 
-    public void addReviews(Long courseId, List<Review> reviews) {
+    public void addReviews(Long courseId, Student s, List<Review> reviews) {
 	Course c = findById(courseId);
 
 	for (Review review : reviews) {
@@ -54,8 +58,10 @@ public class CourseRepository {
 	    // method in order to pick up the reviews for the course through
 	    // course.getReviews()
 	    c.addReview(review);
+	    s.addReview(review);
 
 	    review.setCourse(c);
+	    review.setStudent(s);
 
 	    em.persist(review);
 	}
@@ -143,8 +149,12 @@ public class CourseRepository {
 	em.persist(c);
 	em.persist(c2);
 
-	// em.flush(); // Will fix the Hibernate created_date bug
+	em.flush(); // Will fix the Hibernate created_date bug
 	c2.setName("Java - Updated"); // Results in the created_date being null - bug in Hibernate
+
+	Course c3 = new Course("Business Economics");
+	em.persist(c3);
+	c3.setName("Business Economics - Updated");
     }
 
     public void playground() {
@@ -165,7 +175,9 @@ public class CourseRepository {
 	reviews.add(new Review("1", "That was toilet"));
 	reviews.add(new Review("2.5", "I've seen better"));
 
-	addReviews(10003L, reviews);
+	Student s = studentRepo.findById(20002L);
+
+	addReviews(10003L, s, reviews);
 	logger.info("\n\n\nCourseRepo: Course 10003 Reviews: {}\n\n\n", findById(10003L).getReviews());
 
 	// EM will now flush all changes to the DB, because the transaction has ended

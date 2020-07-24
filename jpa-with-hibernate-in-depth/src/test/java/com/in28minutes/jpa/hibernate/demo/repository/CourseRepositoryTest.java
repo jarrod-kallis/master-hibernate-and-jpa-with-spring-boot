@@ -2,20 +2,33 @@ package com.in28minutes.jpa.hibernate.demo.repository;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
+import java.util.List;
 
 import org.junit.jupiter.api.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.test.annotation.DirtiesContext;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.in28minutes.jpa.hibernate.demo.entity.Course;
+import com.in28minutes.jpa.hibernate.demo.entity.Student;
 
 // Required Annotation to make the test run with a Spring Context, so that it's aware of all the Entities, Repos, etc...
 @SpringBootTest // (classes = DemoApplication.class) <- Will launch the specified Spring Context
 class CourseRepositoryTest {
 
+    private Logger logger = LoggerFactory.getLogger(this.getClass());
+
     @Autowired
     CourseRepository courseRepo;
+
+    @Autowired
+    StudentRepository studentRepo;
 
     @Test
     void findById() {
@@ -36,16 +49,16 @@ class CourseRepositoryTest {
     }
 
     @Test
-    @DirtiesContext // Will allow findEnglishCourse to pass, because the delete will be rolled back
-    void removeEnglishCourse() {
-	courseRepo.deleteById(10002L);
-	assertNull(courseRepo.findById(10002L));
+    @DirtiesContext // Will allow findTempCourse to pass, because the delete will be rolled back
+    void removeTempCourse() {
+	courseRepo.deleteById(10004L);
+	assertNull(courseRepo.findById(10004L));
     }
 
     @Test
-    void findEnglishCourse() {
-	Course c = courseRepo.findById(10002L);
-	assertEquals("English", c.getName());
+    void findTempCourse() {
+	Course c = courseRepo.findById(10004L);
+	assertEquals("Temp Course", c.getName());
     }
 
     @Test
@@ -62,8 +75,23 @@ class CourseRepositoryTest {
     }
 
     @Test
-    @DirtiesContext
-    void playground() {
-	courseRepo.playground();
+    @Transactional
+    void getCourseAndAssociatedStudents() {
+	Course c = courseRepo.findById(10003L);
+	List<Student> students = c.getStudents();
+
+	logger.info("\n\n\nCourse {} Students: {}\n\n\n", c.getId(), students);
+
+	assertEquals(students.size(), 2);
+	assertEquals("Ben Kallis", students.get(0).getName());
+	assertEquals("Tessa Kallis", students.get(1).getName());
+    }
+
+    @Test
+    void removeCourseThatHasAStudentEnrolled() {
+	// An exception should be thrown, because the course has students linked to it
+	assertThrows(DataIntegrityViolationException.class, () -> {
+	    courseRepo.deleteById(10003L);
+	});
     }
 }

@@ -23,6 +23,9 @@ public class Review {
     @ManyToOne(optional = false)
     private Course course;
 
+    @ManyToOne(optional = false)
+    private Student student;
+
     protected Review() {
 	super();
     }
@@ -59,6 +62,14 @@ public class Review {
 
     public void setCourse(Course course) {
 	this.course = course;
+    }
+
+    public Student getStudent() {
+	return student;
+    }
+
+    public void setStudent(Student student) {
+	this.student = student;
     }
 
     @Override

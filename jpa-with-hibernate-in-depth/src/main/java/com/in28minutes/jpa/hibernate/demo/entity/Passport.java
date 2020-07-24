@@ -2,7 +2,6 @@ package com.in28minutes.jpa.hibernate.demo.entity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
@@ -20,7 +19,7 @@ public class Passport {
     // mappedBy = prevents a foreign key column to Student in the Passport table,
     // and instead makes Student the owning entity.
     // "passport" is the property on the Student entity
-    @OneToOne(fetch = FetchType.EAGER, mappedBy = "passport")
+    @OneToOne(/* fetch = FetchType.EAGER, */ mappedBy = "passport")
     private Student student;
 
     protected Passport() {

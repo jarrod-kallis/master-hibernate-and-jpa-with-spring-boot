@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -40,7 +41,8 @@ public class Course {
     private LocalDateTime createdDateTime;
 
     // If the relationship is Many then it is usually initialised on creation
-    @OneToMany(mappedBy = "course")
+    // Cascade ALL will delete the reviews if the course is deleted
+    @OneToMany(mappedBy = "course", cascade = CascadeType.ALL)
     private List<Review> reviews = new ArrayList<Review>();
 
     @ManyToMany(mappedBy = "courses")
