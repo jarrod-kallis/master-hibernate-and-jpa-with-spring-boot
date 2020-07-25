@@ -32,7 +32,7 @@ class JPQLTest {
     }
 
     @Test
-    void findWithWhere() {
+    void findWithWhereLike() {
 	List<Course> courseList = em.createNamedQuery(CourseRepository.SELECT_ALL_H_COURSES, Course.class)
 		.getResultList();
 
