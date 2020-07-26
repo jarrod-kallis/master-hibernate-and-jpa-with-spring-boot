@@ -94,4 +94,16 @@ class CourseRepositoryTest {
 	    courseRepo.deleteById(10003L);
 	});
     }
+
+    // Cache Testing
+
+    @Test
+    // In order to use FLC this method must be in a single transaction
+    @Transactional
+    void findById_FirstLevelCache() {
+	// This should result in an SQL
+	logger.info("\n\n\nFirst Level Cache Test - First Call - Course 10001: {}\n\n\n", courseRepo.findById(10001L));
+	// This should result in no SQl, the data will be retrieved from the FLC
+	logger.info("\n\n\nFirst Level Cache Test - Second Call - Course 10001: {}\n\n\n", courseRepo.findById(10001L));
+    }
 }

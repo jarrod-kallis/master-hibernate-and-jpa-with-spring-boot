@@ -6,6 +6,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 public class Review {
     @Id
@@ -23,6 +25,7 @@ public class Review {
     @ManyToOne(optional = false)
     private Course course;
 
+    @JsonIgnore
     @ManyToOne(optional = false)
     private Student student;
 

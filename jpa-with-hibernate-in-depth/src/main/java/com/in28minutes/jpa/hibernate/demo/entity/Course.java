@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.Cacheable;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -17,6 +18,7 @@ import javax.persistence.OneToMany;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.in28minutes.jpa.hibernate.demo.repository.CourseRepository;
 
 // An annotation that tells JPA that this class is also a table in the DB
@@ -24,6 +26,7 @@ import com.in28minutes.jpa.hibernate.demo.repository.CourseRepository;
 // @Table(name = "CourseDetails") // Table will be called 'course_details'
 @NamedQueries(value = { @NamedQuery(name = CourseRepository.SELECT_ALL_COURSES, query = "select c from Course c"),
 	@NamedQuery(name = CourseRepository.SELECT_ALL_H_COURSES, query = "select c from Course c where upper(c.name) like '%H%'") })
+@Cacheable
 public class Course {
     // Indicates that this field is the primary key
     @Id
@@ -45,10 +48,11 @@ public class Course {
     @OneToMany(mappedBy = "course", cascade = CascadeType.ALL)
     private List<Review> reviews = new ArrayList<Review>();
 
+    @JsonIgnore
     @ManyToMany(mappedBy = "courses")
     private List<Student> students = new ArrayList<Student>();
 
-    // JPA requires the ability to call a a no-argument constructor
+    // JPA requires the ability to call a no-argument constructor
     protected Course() {
 	super();
     }

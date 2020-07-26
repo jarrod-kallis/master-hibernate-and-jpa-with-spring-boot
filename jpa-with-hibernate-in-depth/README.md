@@ -235,3 +235,53 @@ eg. The withdrawal & deposit transaction is successful, but the SMS to the clien
 `javax.transaction.Transactional`<br><br>
 **Spring Transaction Management:** Can handle a transaction across multiple DBs & Queues.<br>
 `org.springframework.transaction.Transactional`<br>
+
+
+## Caching
+
+![Data Layer](README_images/07-Hibernate-Caching.png)
+
+### Caching Levels
+![Caching Levels](README_images/08-Hibernate-Caching-Levels.png)
+
+### Caching Example
+![Data Layer](README_images/09-Hibernate-Caching-Example.png)
+
+### First Level Cache
+FLC is within the boundary of a single transaction.
+It is set up/configured by default.
+eg. If a transaction retrieves the same entity instance multiple times within its lifetime, then it will retrieve it from the DB only once, store it in FLC (Persistence Context), and from then on retrieve it from the cache.
+
+### Second Level Cache
+SLC comes into the picture across multiple transactions.
+SLC survives browser refreshes.
+This has to be set up explicitly, like including EhCache in the pom.xml.
+```
+<dependency>
+    <groupId>org.hibernate</groupId>
+    <artifactId>hibernate-ehcache</artifactId>
+</dependency>
+```
+This stores data that won't change across different users, like countries, states, etc...
+
+Update `application.properties`:
+```
+# Second Level Cache - EhCache
+# Enable SLC
+spring.jpa.properties.hibernate.cache.use_second_level_cache=true
+# Specify what caching framework to use - EhCache
+spring.jpa.properties.hibernate.cache.region.factory_class=org.hibernate.cache.ehcache.internal.EhcacheRegionFactory
+# Cache Mode: Only cache what I say (see javax.persistence.SharedCacheMode for different modes)
+spring.jpa.properties.javax.persistence.sharedCache.mode=ENABLE_SELECTIVE
+# Set logging level to debug for EhCache package
+logging.level.net.sf.ehcache=debug
+```
+
+In order to specify what entities must be cached, we must add `@Cacheable` to the entity.
+
+```
+@Entity
+@Cacheable
+public class Course {
+...
+```
